@@ -1,14 +1,20 @@
 import FormBasicInfo from '../components/FormBasicInfo'
 import FormAbout from '../components/FormAbout'
+import FormConfirm from '../components/FormConfirm'
 import AfterSubmit from '../components/AfterSubmit'
 import React, { Component } from 'react';
 export default class signUp extends React.Component {
     state = {
       step: 1,
-      basicInfo: {name: String, Sport: String, gender: String, dateOfBirth: Date},
-      about: {description: String, team: String, location: String, },
-      name: "",
-      phone:"",
+      firstName: String, 
+      lastName: String, 
+      sports: String, 
+      gender: String, 
+      dateOfBirth: Date,
+      description: String, 
+      team: String, 
+      location: String,
+      profilePic: Image,
       signupSuccess: false  
     }
     next = () => {
@@ -39,8 +45,8 @@ export default class signUp extends React.Component {
       }
       render(){
         const { step } = this.state
-        const { basicInfo, about, signupSuccess } = this.state
-        const values = { basicInfo, about, signupSuccess }
+        const { firstName, lastName, sports, gender, dateOfBirth, description, team, location, profilePic, signupSuccess,  } = this.state
+        const values = { firstName, lastName, sports, gender, dateOfBirth, description, team, location, profilePic, signupSuccess }
         switch (step) {
             case 1:
               return (
@@ -55,13 +61,24 @@ export default class signUp extends React.Component {
                 <FormAbout 
                 values = {values} 
                 handleChange = {this.handleChange}
+                next = {this.next}
                 back = {this.back}
                 handleSubmit = {this.handleSubmit}
                 />
               )
-            
             case 3:
-              return <AfterSubmit signupSuccess = {values.signupSuccess}/>
+                return (
+                    <FormConfirm
+                    values = {values} 
+                    next = {this.next}
+                    back = {this.back}
+                    handleSubmit = {this.handleSubmit}
+                    />
+                  )
+            case 4:
+              return (<AfterSubmit
+                 values = {values}
+                 />)
           }
         }
 }

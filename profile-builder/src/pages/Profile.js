@@ -1,24 +1,21 @@
-import React, { Component } from 'react'
+import {React, Component} from 'react';
 import {ThemeProvider as MuiThemeProvider} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography"; 
+import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/icons/Menu'
-import Redirect from 'react-router-dom/Redirect'
-import Link from '@material-ui/core/Link'
-import { NavLink, useHistory } from 'react-router-dom';
-export class AfterSubmit extends Component {
-    // continue = e => {
-    //     e.preventDefault();
-    //     let path=`/list/${this.props.values.firstName}_${this.props.values.lastName}`
-    //     let history = useHistory();
-    //     history.push(path)
-    // }
+
+export class Profile extends Component {
+    continue = e => {
+        e.preventDefault();
+        this.props.next();
+    }
     
     render() {
-        const { values } = this.props;
+        const { values, handleChange } = this.props;
         return (
             <MuiThemeProvider>
                 <React.Fragment>
@@ -35,14 +32,7 @@ export class AfterSubmit extends Component {
                         </Toolbar>
                     </AppBar>
             
-                    <br />
-                
-                    <h1>You have successfully created a new profile!</h1>
-
-                    <br />
-                    <NavLink to={`/list/${this.props.values.firstName}_${this.props.values.lastName}`} className="btn btn-primary" style={styles.button}>View My Profile</NavLink>
-               
-                    
+                    <br />      
                 </React.Fragment>
             </MuiThemeProvider>
         )
@@ -67,4 +57,4 @@ const styles = {
         position: "absolute"
     }
 }
-export default AfterSubmit;
+export default Profile;
