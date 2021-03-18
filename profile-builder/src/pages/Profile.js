@@ -1,4 +1,4 @@
-import {React, Component} from 'react';
+import React, {Component} from 'react';
 import {ThemeProvider as MuiThemeProvider} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from "@material-ui/core/Toolbar";
@@ -7,15 +7,22 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/icons/Menu'
-
+import ProfilePage from '../components/ProfilePage'
 export class Profile extends Component {
-    continue = e => {
-        e.preventDefault();
-        this.props.next();
+
+    state = {users: []}
+    
+    componentDidMount() {
+    fetch('/users', {headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+       }})
+      .then(res => res.json())
+      .then(users => this.setState({ users }));
     }
     
     render() {
-        const { values, handleChange } = this.props;
+        const {users} = this.state;
         return (
             <MuiThemeProvider>
                 <React.Fragment>
@@ -31,8 +38,10 @@ export class Profile extends Component {
                             
                         </Toolbar>
                     </AppBar>
-            
-                    <br />      
+                    <br />
+                    {console.log(users)}
+                <ProfilePage 
+                    users = {users} />
                 </React.Fragment>
             </MuiThemeProvider>
         )

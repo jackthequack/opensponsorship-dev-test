@@ -4,10 +4,30 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import ParentForm from './pages/ParentForm';
+import Profile from './pages/Profile'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useParams
+} from "react-router-dom";
 
 ReactDOM.render((
   <BrowserRouter>
-    <App />
+    <Switch>
+    <Route exact path="/">
+      <div className="App">
+        <ParentForm />
+      </div>
+      </Route>
+      <Route path="/list/:slug">
+        <div className="App">
+          <Profile />
+      </div>
+      </Route>
+    </Switch>
+    {/* <App /> */}
   </BrowserRouter>
   ), document.getElementById('root'));
 
