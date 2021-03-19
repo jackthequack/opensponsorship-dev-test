@@ -3,7 +3,8 @@ import FormAbout from '../components/FormAbout'
 import FormConfirm from '../components/FormConfirm'
 import AfterSubmit from '../components/AfterSubmit'
 import React, { Component } from 'react';
-export default class signUp extends React.Component {
+import axios, { post } from 'axios';
+export default class ParentForm extends React.Component {
     state = {
       step: 1,
       firstName: String, 
@@ -35,14 +36,12 @@ export default class signUp extends React.Component {
         })
         console.log(this.state)
     }
-    handleSubmit = () =>{
-        //connect to the database, depending on the returned state, 
-        //will change the state.signupSuccess to be true
-        //and then render success component
-        this.setState({
-          signupSuccess: true
-        }, () => this.next())
-      }
+    handleChangePic = input => e => {
+      this.setState({
+        [input]: e.target.files[0]
+      } )
+    }
+    
       render(){
         const { step } = this.state
         const { firstName, lastName, sports, gender, dateOfBirth, description, team, location, profilePic, signupSuccess,  } = this.state
@@ -61,9 +60,10 @@ export default class signUp extends React.Component {
                 <FormAbout 
                 values = {values} 
                 handleChange = {this.handleChange}
+                handleChangePic = {this.handleChangePic}
                 next = {this.next}
                 back = {this.back}
-                handleSubmit = {this.handleSubmit}
+                
                 />
               )
             case 3:
@@ -72,13 +72,13 @@ export default class signUp extends React.Component {
                     values = {values} 
                     next = {this.next}
                     back = {this.back}
-                    handleSubmit = {this.handleSubmit}
                     />
                   )
             case 4:
               return (<AfterSubmit
                  values = {values}
                  />)
+            default:
           }
-        }
+      }
 }

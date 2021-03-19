@@ -7,17 +7,43 @@ import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/icons/Menu'
 import { List, ListItem, ListItemText } from '@material-ui/core';
+import axios from 'axios';
 
 export class FormConfirm extends Component {
+    
     continue = e => {
         e.preventDefault();
+        let {firstName, lastName, sports, dateOfBirth, gender, description, team, location, profilePic} = this.props.values;
+        let profile = {
+          firstName,
+          lastName,
+          sports,
+          dateOfBirth,
+          gender,
+          description,
+          team,
+          location,
+        }
+        let pp = {profilePic: profilePic}
+        axios
+            .post('/create', profile)
+            .then(res => {
+                console.log(res)
+                pp["id"] = res.data;
+                console.log(pp)
+                console.log(pp["id"])
+                return axios.post('/create', pp);
+                
+            })
+            .catch(err => console.log(err))
+        
         this.props.next();
     }
     back = e => {
         e.preventDefault();
         this.props.back();
     } 
-
+    
     render(){
         const { values: { firstName, lastName, sports, gender, dateOfBirth, description, team, location} } = this.props;
         return(

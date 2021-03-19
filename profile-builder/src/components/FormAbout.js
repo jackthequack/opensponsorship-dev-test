@@ -20,7 +20,7 @@ export class FormAbout extends Component {
     }
     
     render() {
-        const { values, handleChange } = this.props;
+        const { values, handleChange, handleChangePic } = this.props;
         return (
             <MuiThemeProvider>
                 <React.Fragment>
@@ -81,6 +81,7 @@ export class FormAbout extends Component {
                             id="upload-photo"
                             name="upload-photo"
                             type="file"
+                            onChange={handleChangePic('profilePic')}
                         />
 
                         <Fab

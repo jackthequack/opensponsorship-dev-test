@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {useParams} from "react-router-dom"
-
+import CardMedia from '@material-ui/core/CardMedia'
+import { Card } from '@material-ui/core';
 function ProfilePage(props) {
     let { slug } = useParams();
     let name = slug.split('_');
@@ -9,10 +10,12 @@ function ProfilePage(props) {
     
 
     const users = props.users;
-    console.log(users)
     let user = users.filter(user => { return (user.firstName == firstName && user.lastName == lastName)})[0]
     console.log(user)
-    return <h1>Hello</h1>
+    return(
+        <CardMedia 
+        />
+    )
 }
 
 export default ProfilePage
