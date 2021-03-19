@@ -30,6 +30,7 @@ export class FormConfirm extends Component {
             .post('/create', profile)
             .then(res => {
                 console.log(res)
+                this.props.handleID(res.data)
                 pp["id"] = res.data;
                 console.log(pp)
                 console.log(pp["id"])

@@ -42,7 +42,7 @@ export class AfterSubmit extends Component {
                     <h1>You have successfully created a new profile!</h1>
 
                     <br />
-                    <NavLink to={`/list/${this.props.values.firstName}_${this.props.values.lastName}`} className="btn btn-primary" style={styles.button}>View My Profile</NavLink>
+                    <NavLink to={`/list/${this.props.values.firstName}_${this.props.values.lastName}/${this.props.values.id}`} className="btn btn-primary" style={styles.button}>View My Profile</NavLink>
                
                     
                 </React.Fragment>

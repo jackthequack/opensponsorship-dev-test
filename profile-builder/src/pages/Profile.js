@@ -9,24 +9,30 @@ import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/icons/Menu'
 import ProfilePage from '../components/ProfilePage'
 import { FormFile } from 'react-bootstrap';
+import axios from 'axios'
 export class Profile extends Component {
     constructor(props){
         super(props)
         this.state = {users: []}
         this.state.loading = true;
-        // fetch('/users', {headers : { 
-        //     'Content-Type': 'application/json',
-        //     'Accept': 'application/json'
-        //    }})
-        // .then(res => res.json())
-        // .then(user => {
-        //     console.log(user);
-        //     this.state.users = user;
-        //     console.log(this.state.users);
-        // })
-        // this.state = {users: []};
+        
     }
-    // state = {users: []}
+    onSubmit() {
+        console.log(this.users)
+        axios
+        .put('/update', this.users)
+        .then(res => {
+            // console.log(res)
+            // pp["id"] = res.data;
+            // console.log(pp)
+            // console.log(pp["id"])
+            // return axios.post('/create', pp);
+            res.json();
+            
+        })
+        .catch(err => console.log(err))
+    } 
+    
      onRefresh(){
         
             fetch('/users', {headers : { 
@@ -71,6 +77,7 @@ export class Profile extends Component {
                         <br />
                         {/* {console.log(users)} */}
                     <ProfilePage 
+                        onSubmit={this.onSubmit}
                          />
                     </React.Fragment>
                 </MuiThemeProvider>

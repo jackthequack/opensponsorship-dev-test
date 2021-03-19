@@ -16,7 +16,8 @@ export default class ParentForm extends React.Component {
       team: String, 
       location: String,
       profilePic: Image,
-      signupSuccess: false  
+      id: String,
+      signupSuccess: false, 
     }
     next = () => {
         // update state.step by adding to previous state
@@ -25,10 +26,14 @@ export default class ParentForm extends React.Component {
         }})
     }
     back = () => {
-    // update state.step by minus 1 from previous state
-    this.setState(prevState => {
-        return {step: prevState.step - 1
-    }})
+      //update state.step by minus 1 from previous state
+      this.setState(prevState => {
+          return {step: prevState.step - 1
+      }})
+    }
+    handleID = idVal => {
+      this.setState({id: idVal})
+      console.log(this.state)
     }
     handleChange = input => e => {
         this.setState({
@@ -72,6 +77,8 @@ export default class ParentForm extends React.Component {
                     values = {values} 
                     next = {this.next}
                     back = {this.back}
+                    handleID = {this.handleID}
+
                     />
                   )
             case 4:
@@ -81,4 +88,4 @@ export default class ParentForm extends React.Component {
             default:
           }
       }
-}
+    }

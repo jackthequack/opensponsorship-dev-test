@@ -29,7 +29,7 @@ const Navigation = () => (
 const Main = () => (
   <Switch>
     <Route exact path='/' component={ParentForm}></Route>
-    <Route exact path='/list/:name' component={Profile}></Route>
+    <Route exact path='/list/:name/:id' component={Profile}></Route>
     <Route exact path='/list' component={List}></Route>
   </Switch>
 );
