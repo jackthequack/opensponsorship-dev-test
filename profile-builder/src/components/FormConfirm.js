@@ -26,6 +26,7 @@ export class FormConfirm extends Component {
         }
         let pp = {profilePic: profilePic}
         axios
+        //Store images locally temporarily until download4ed to mongo
             .post('/create', profile)
             .then(res => {
                 console.log(res)

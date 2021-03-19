@@ -8,44 +8,77 @@ import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/icons/Menu'
 import ProfilePage from '../components/ProfilePage'
+import { FormFile } from 'react-bootstrap';
 export class Profile extends Component {
+    constructor(props){
+        super(props)
+        this.state = {users: []}
+        this.state.loading = true;
+        // fetch('/users', {headers : { 
+        //     'Content-Type': 'application/json',
+        //     'Accept': 'application/json'
+        //    }})
+        // .then(res => res.json())
+        // .then(user => {
+        //     console.log(user);
+        //     this.state.users = user;
+        //     console.log(this.state.users);
+        // })
+        // this.state = {users: []};
+    }
+    // state = {users: []}
+     onRefresh(){
+        
+            fetch('/users', {headers : { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+               }})
+            .then(res => res.json())
+            .then(user => {
+                return user;
+                console.log(user);
+                this.setState({ users: user });
+                console.log(this.state.users);
+            })
 
-    state = {users: []}
-    
+          };
+
     componentDidMount() {
-    fetch('/users', {headers : { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-       }})
-      .then(res => res.json())
-      .then(users => this.setState({ users }));
-    }
-    
+        fetch('/users', {headers : { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            }})
+              .then(res => res.json())
+              .then(user => this.setState({ users: user }));
+        }
     render() {
-        const {users} = this.state;
-        return (
-            <MuiThemeProvider>
-                <React.Fragment>
-                    <AppBar position="static" >
-                        
-                        <Toolbar>
-                            <Typography variant="h6" style={styles.typography}>
-                                OpenSponsorship
-                            </Typography>
-                            <IconButton edge="start" className="menuButton" color="inherit" aria-label="menu" style={styles.icon}>
-                                <Menu/>
-                            </IconButton>
+        
+            return (
+                <MuiThemeProvider>
+                    <React.Fragment>
+                        <AppBar position="static" >
                             
-                        </Toolbar>
-                    </AppBar>
-                    <br />
-                    {console.log(users)}
-                <ProfilePage 
-                    users = {users} />
-                </React.Fragment>
-            </MuiThemeProvider>
-        )
-    }
+                            <Toolbar>
+                                <Typography variant="h6" style={styles.typography}>
+                                    OpenSponsorship
+                                </Typography>
+                                <IconButton edge="start" className="menuButton" color="inherit" aria-label="menu" style={styles.icon}>
+                                    <Menu/>
+                                </IconButton>
+                                
+                            </Toolbar>
+                        </AppBar>
+                        <br />
+                        {/* {console.log(users)} */}
+                    <ProfilePage 
+                         />
+                    </React.Fragment>
+                </MuiThemeProvider>
+            )
+        }
+        
+        
+    
 }
 
 const styles = {
