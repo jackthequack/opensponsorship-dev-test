@@ -8,6 +8,56 @@ import axios from 'axios'
 import FormData from 'form-data'
 
 const ProfilePage = ({onSubmit}) => {
+    const sports = [
+        "Golf",
+        "Tennis",
+        "Cricket",
+        "Basketball",
+        "Baseball",
+        "American Football",
+        "Aquatics",
+        "Archery",
+        "Automobile Racing",
+        "Badminton",
+        "Beach Volleyball",
+        "Bobsleigh",
+        "Body Building",
+        "Boxing",
+        "Cross Country Running",
+        "Cross Country Skiing",
+        "Curling",
+        "Cycling",
+        "Darts",
+        "Decathlon",
+        "Down Hill Skiing",
+        "Equestrianism",
+        "eSports",
+        "Field Hockey",
+        "Figure Skating",
+        "Gymnastics",
+        "Ice Hockey",
+        "Martial Arts",
+        "Mixed Martial Arts",
+       "Modern Pentathlon",
+        "Motorcycle Racing",
+        "Netball",
+        "Polo",
+        "Racquetball",
+        "Rowing",
+        "Rugby",
+        "Sailing",
+        "Softball",
+        "Shooting",
+        "Skateboarding",
+        "Skeet Shooting",
+        "Skeleton",
+        "Snow Boarding",
+        "Soccer (Football)",
+        "Squash",
+        "Surfing",
+        "Swimming",
+        "Track and Field",
+    ]
     onSubmit.bind(this)
     let { slug } = useParams();
     let name = slug.split('_');
@@ -116,9 +166,16 @@ const ProfilePage = ({onSubmit}) => {
                             <TextField
                                 style={styles.textField}
                                 defaultValue={users.sports}
+                                select
                                 variant="outlined"
                                 onChange= {(e) => users['sports'] = e.target.value}
-                            />
+                            >
+                                {sports.map((option) => (
+                                    <option key={option} value={option}>
+                                        {option}
+                                    </option>
+          ))}
+                            </TextField>
                         </Col>
                         <Col>
                             <TextField
@@ -208,7 +265,7 @@ const ProfilePage = ({onSubmit}) => {
                     }}> Save changes </Button>
                     </Col>
                     <Col>
-                    <NavLink onClick={(e) => {}} to={`/list`} className="btn btn-primary" style={styles.button}>View My Profile</NavLink>
+                    <NavLink  to={`/list`} className="btn btn-primary" style={styles.button}>View My Profile</NavLink>
                     </Col>
                 </Row>
 
@@ -220,7 +277,8 @@ const ProfilePage = ({onSubmit}) => {
 }
 const styles = {
     textField: {
-        margin: "1em"
+        margin: "1em",
+        width: "100%"
     },
     img: {
         width: "10rem",

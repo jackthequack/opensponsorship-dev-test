@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import ParentForm from './pages/ParentForm';
 import Profile from './pages/Profile'
+import List from './pages/List'
 import {
   BrowserRouter as Router,
   Switch,
@@ -26,6 +27,12 @@ ReactDOM.render((
           <Profile />
       </div>
       </Route>
+      <Route path="/list">
+        <div className="App">
+          <List />
+      </div>
+      </Route>
+      
     </Switch>
     {/* <App /> */}
   </BrowserRouter>
