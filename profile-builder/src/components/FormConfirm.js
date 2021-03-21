@@ -8,11 +8,25 @@ import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/icons/Menu'
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import axios from 'axios';
-
+import multer from 'multer';
+import crypto from 'crypto'
+import FormData from 'form-data'
 export class FormConfirm extends Component {
     
+    // storage = multer.diskStorage({ //Used for dynamic naming of images https://www.digitalocean.com/community/tutorials/nodejs-uploading-files-multer-express
+    //     destination: './public',
+    //     filename: function (req, file, callback) {
+    //     crypto.pseudoRandomBytes(16, function(err, raw) {
+    //         if (err) {return callback(err);}
+        
+    //         callback(null, raw.toString('hex') + path.extname(file.originalname));
+    //     });
+    //     }
+    // });
+    // upload = multer({ storage: storage });
     continue = e => {
         e.preventDefault();
+        const formData = new FormData();
         let {firstName, lastName, sports, dateOfBirth, gender, description, team, location, profilePic} = this.props.values;
         let profile = {
           firstName,
@@ -24,18 +38,18 @@ export class FormConfirm extends Component {
           team,
           location,
         }
+        for(let attribute in profile){
+            formData.set(attribute, profile[attribute])
+        }
+        formData.set("file", profilePic, profilePic.name)
+        for(let value of formData.entries()){
+            console.log(value[0], value[1])
+        }
         let pp = {profilePic: profilePic}
         axios
         //Store images locally temporarily until download4ed to mongo
-            .post('/create', profile)
-            .then(res => {
-                console.log(res)
-                this.props.handleID(res.data)
-                pp["id"] = res.data;
-                console.log(pp)
-                console.log(pp["id"])
-                return axios.post('/create', pp);
-                
+            .post('/create', formData, {
+                headers: {'Content-Type': 'multipart/form-data'}
             })
             .catch(err => console.log(err))
         

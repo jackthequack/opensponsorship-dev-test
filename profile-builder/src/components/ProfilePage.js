@@ -1,10 +1,11 @@
-import React, {Component, useState, useEffect} from 'react';
+import React, {Component, useState, useEffect, forceUpdate, useReducer} from 'react';
 import {useParams, NavLink} from "react-router-dom"
 import {ThemeProvider as MuiThemeProvider} from '@material-ui/core/styles'
 import { Fab, CardMedia, CardActionArea, TextField, TableRow, Avatar, CardHeader, Button} from '@material-ui/core';
 import { Container, Row, Col } from 'react-bootstrap';
 import AddIcon from "@material-ui/icons/Add";
 import axios from 'axios'
+import FormData from 'form-data'
 
 const ProfilePage = ({onSubmit}) => {
     onSubmit.bind(this)
@@ -14,7 +15,7 @@ const ProfilePage = ({onSubmit}) => {
     let lastName = name[1];
     const[isLoading, setLoading] = useState(true);
     const[users, setUsers] = useState();
-    console.log(firstName, lastName)
+    const [_, forceUpdate] = useReducer((x) => x + 1, 0);
     
     useEffect(() => {
         const data = fetch('/users', {headers : { 
@@ -23,7 +24,9 @@ const ProfilePage = ({onSubmit}) => {
             }})
               .then(res => res.json())
               .then(user => {
+                  console.log(user)
                   let userList = user.filter(u => { return (u.firstName == firstName && u.lastName == lastName)})[0]
+                  console.log(userList)
                   setUsers(userList);
                   setLoading(false)
                   return user;
@@ -42,8 +45,9 @@ const ProfilePage = ({onSubmit}) => {
                             <Row>
                                 <Col>
                                 <Avatar
+                                id='profilePic'
                                 style={styles.img}
-                                src="/Krause_GeorgeL_001.jpg" 
+                                src={users.profilePic} 
                                 />
                                 <br />
                                 </Col>
@@ -58,7 +62,10 @@ const ProfilePage = ({onSubmit}) => {
                                     id="upload-photo"
                                     name="upload-photo"
                                     type="file"
-                                    onChange= {(e) => users['profilePic'] = e.target.files[0]}
+                                    onChange= {(e) => {
+                                        users['profilePic'] = e.target.files[0];
+                                    }
+                                    }
                                 />
                                 <Fab
                                 color="secondary"
@@ -179,17 +186,24 @@ const ProfilePage = ({onSubmit}) => {
                     <Col>
                     <Button variant="contained" style = {styles.button} onClick={() => {
                         console.log(users)
+                        const formData = new FormData();
+                        for(let attribute in users){
+                            formData.set(attribute, users[attribute])
+                        }
+                        if(users.profilePic instanceof File){
+                            console.log("Working")
+                            formData.delete("profilePic")
+                            formData.set("file", users.profilePic, users.profilePic.name)
+                        }
+     
                         axios
-                        .put('/update', users)
-                        .then(res => {
-                            // console.log(res)
-                            // pp["id"] = res.data;
-                            // console.log(pp)
-                            // console.log(pp["id"])
-                            // return axios.post('/create', pp);
-                            res.json();
-                            
+                        .put('/update', formData, {
+                            headers: {'Content-Type': 'multipart/form-data'}
                         })
+                        .then(res => {
+                            setUsers(res.data)
+                        })
+                        .then(forceUpdate())
                         .catch(err => console.log(err))
                     }}> Save changes </Button>
                     </Col>

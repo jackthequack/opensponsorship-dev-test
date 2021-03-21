@@ -1,81 +1,75 @@
 var express = require('express');
 var router = express.Router();
-var MongoClient = require('mongodb').MongoClient
-/* GET users listing. */
-let users;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const mongoDB = 'mongodb://localhost:27017/profiles'
+// var MongoClient = require('mongodb').MongoClient
+const crypto = require('crypto')
+const multer = require('multer');
+const path = require('path');
+const User = require('../user_model.js')
+mongoose.connect(mongoDB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './public/images');
+    },
+    filename: function (req, file, cb) {
+      cb(
+        null,
+        file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+      );
+    },
+  });
 
-// const storage = multer.diskStorage({
-//     destination: "./public/images",
-//     filename: function (req, file, cb) {
-//       cb(
-//         null,
-//         file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-//       );
-//     },
-//   });
+  let upload = multer({storage: storage});
+// let gfs;
 
-router.post('/', function(req, res, next) {
+// connect.once('open', () => {
+//     gfs = new mongoose.mongo.GridFSBucket(connect.db, {
+//         bucketName: "profilePictures"
+//     })
+// })
+router.post('/', upload.single('file'), function(req, res, next) {
+    
     let newId;
     // for(i in req.body){
     //     console.log(req.body[i])
     // }
-    console.log("Profile: " + req.body.profilePic)
+    
+    // console.log("Profile data", req.body)
     const newProfile = {};
-    if(typeof(req.body.id) != 'undefined'){
-        newProfile.profilePic = req.body.profilePic;
-        MongoClient.connect('mongodb://localhost:27017/profiles', function (err, client) {
-            if (err) throw err;
-    
-            var db = client.db('profiles')
-            let profile = db.collection('users').findOne({"_id": req.body.id})
-            profile["profilePic"] = newProfile.profilePic
-           for(let i in profile){
-               console.log(i + " " + profile[i])
-           }
-            db.collection('users').updateOne({"_id": req.body.id.id}, {$set: {profilePic: newProfile.profilePic}}, (err, response) => {
-                if(err) throw err;
-                console.log("1 document updated")
-                res.end();
-            })
-        })
-    }
-    else{
-        console.log("WORKING")
-        newProfile.firstName = req.body.firstName,
-        newProfile.lastName = req.body.lastName,
-        newProfile.sports = req.body.sports,
-        newProfile.gender = req.body.gender,
-        newProfile.dateOfBirth = req.body.dateOfBirth,
-        newProfile.description = req.body.description,
-        newProfile.team = req.body.team,
-        newProfile.location = req.body.location
+    newProfile.firstName = req.body.firstName,
+    newProfile.lastName = req.body.lastName,
+    newProfile.sports = req.body.sports,
+    newProfile.gender = req.body.gender,
+    newProfile.dateOfBirth = req.body.dateOfBirth,
+    newProfile.description = req.body.description,
+    newProfile.team = req.body.team,
+    newProfile.location = req.body.location
+    newProfile.profilePic = '/images/' + req.file.filename
         
-        console.log(newProfile);
-        MongoClient.connect('mongodb://localhost:27017/profiles', function (err, client) {
-            if (err) console.log("Error!!!")
-    
-            var db = client.db('profiles')
-            console.log("still working")
-            db.collection('users').insertOne(newProfile, (err, response) => {
-                console.log("still still working")
-                if(err) throw err;
-                
-                console.log("1 document inserted");
-                db.collection('users').findOne(newProfile, (err, profile) => {
-                    console.log("NEW ID: " + profile._id)
-                    newID = profile._id
-                    res.json({id: newID});
-                })
-                
-                
-            })
-        })
-    }
+        console.log("Profile: " + req.file)
+       console.log(req.file.filename)
 
- 
-  
-  
-});
+        let userInstance = new User(newProfile);
+        console.log(userInstance)
+        userInstance.save((err) => {
+            if(err){
+                console.log("ERROR")
+                return err;
+            }
+            else{
+                console.log("saved");
+                res.status(200).end();
+            }
+            
+        })
+        
+    }
+);
 
 router.post('/img', function(req, res, next) { 
 

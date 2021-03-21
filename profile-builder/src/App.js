@@ -1,6 +1,7 @@
 import './App.css';
 import ParentForm from './pages/ParentForm'
 import Profile from './pages/Profile'
+import List from './pages/List'
 import {Button, Navbar, Nav, Container, Row, Col} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { NavLink, Switch, Route} from 'react-router-dom';
@@ -29,7 +30,7 @@ const Navigation = () => (
 const Main = () => (
   <Switch>
     <Route exact path='/' component={ParentForm}></Route>
-    <Route exact path='/list/:name/:id' component={Profile}></Route>
+    <Route exact path='/list/:name' component={Profile}></Route>
     <Route exact path='/list' component={List}></Route>
   </Switch>
 );
@@ -43,11 +44,6 @@ const Form = () => (
 
 
 
-const List = () => (
-  <div className='list'>
-    <h1>Contact Me</h1>
-    <p>You can reach me via email: <strong>hello@example.com</strong></p>
-  </div>
-);
+
 
 export default App;

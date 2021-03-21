@@ -1,79 +1,71 @@
 var express = require('express');
 var router = express.Router();
-var MongoClient = require('mongodb').MongoClient
-/* GET users listing. */
-let users;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const mongoDB = 'mongodb://localhost:27017/profiles'
+const User = require('../user_model.js')
+const multer = require('multer')
+const fs = require('fs')
+const path = require('path');
 
-// const storage = multer.diskStorage({
-//     destination: "./public/images",
-//     filename: function (req, file, cb) {
-//       cb(
-//         null,
-//         file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-//       );
-//     },
-//   });
 
-router.put('/', function(req, res, next) {
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './public/images');
+    },
+    filename: function (req, file, cb) {
+      cb(
+        null,
+        file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+      );
+    },
+  });
+  const upload = multer({storage: storage})
+
+router.put('/', upload.single('file'), function(req, res, next) {
     let newId;
-
+    console.log("File: " + req.file)
     console.log("Profile: " + req.body.profilePic)
     const newProfile = {};
-    // if(typeof(req.body.id) != 'undefined'){
-    //     console.log("Working")
-    //     newProfile.profilePic = req.body.profilePic;
-    //     MongoClient.connect('mongodb://localhost:27017/profiles', function (err, client) {
-    //         if (err) throw err;
-    
-    //         var db = client.db('profiles')
-    //         let profile = db.collection('users').findOne({"_id": req.body.id})
-    //         profile["profilePic"] = newProfile.profilePic
-    //        for(let i in profile){
-    //            console.log(i + " " + profile[i])
-    //        }
-    //         db.collection('users').updateOne({"_id": req.body.id.id}, {$set: {profilePic: newProfile.profilePic}}, (err, response) => {
-    //             if(err) throw err;
-    //             console.log("1 document updated")
-    //             res.end();
-    //         })
-    //     })
-    // }
-    // else{
-        newProfile.firstName = req.body.firstName,
-        newProfile.lastName = req.body.lastName,
-        newProfile.sports = req.body.sports,
-        newProfile.gender = req.body.gender,
-        newProfile.dateOfBirth = req.body.dateOfBirth,
-        newProfile.description = req.body.description,
-        newProfile.team = req.body.team,
-        newProfile.location = req.body.location
-        
-        console.log(newProfile);
-        MongoClient.connect('mongodb://localhost:27017/profiles', function (err, client) {
-            if (err) console.log("Error!!!")
-    
-            var db = client.db('profiles')
-            console.log("Being Called")
-            db.collection('users').updateOne({firstName: newProfile.firstName, lastName: newProfile.lastName}, {$set: {firstName: newProfile.firstName}}, (err, response) => {
-                if(err) throw err;
-                
-                console.log("1 document updated");
-                console.log(response.result)
-                db.collection('users').findOne({firstName: newProfile.firstName, lastName: newProfile.lastName}, (err, profile) => {
-                    console.log("Profile: ", profile)
-                    // console.log("NEW ID: " + profile._id)
-                    // newID = profile._id
-                    // res.json({id: newID});
-                    res.end();
-                })
-                
-                
-            })
-        })
-        
 
- 
-  
+    newProfile.firstName = req.body.firstName,
+    newProfile.lastName = req.body.lastName,
+    newProfile.sports = req.body.sports,
+    newProfile.gender = req.body.gender,
+    newProfile.dateOfBirth = req.body.dateOfBirth,
+    newProfile.description = req.body.description,
+    newProfile.team = req.body.team,
+    newProfile.location = req.body.location
+    if(req.file) {
+        newProfile.profilePic = '/images/' + req.file.filename;
+    }
+    else {
+        newProfile.profilePic = req.body.profilePic
+    }
+        console.log(newProfile.profilePic)
+    console.log(__dirname)
+    User.findById(req.body["_id"], (err, oldUser) => {
+        if(newProfile.profilePic != oldUser.profilePic){
+            fs.unlinkSync(path.join(__dirname, '..', 'public', oldUser.profilePic), (err) => {
+                if(err) throw err;
+                console.log("Deleted:", oldUser.profilePic)
+            })
+            User.findByIdAndUpdate(req.body["_id"], newProfile, {new: true}, (err, newUser) => {
+                console.log("Updated user: ", newUser)
+                res.status(200).send(newUser);
+            });
+        }
+        else{
+            User.findByIdAndUpdate(req.body["_id"], newProfile, (err, newUser) => {
+                console.log("Updated user: ", newUser)
+                res.status(200).end();
+            });
+        }
+        
+    })
+   
+    
+
   
 });
 

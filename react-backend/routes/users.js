@@ -1,27 +1,24 @@
 var express = require('express');
 var router = express.Router();
-var MongoClient = require('mongodb').MongoClient
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const mongoDB = 'mongodb://localhost:27017/profiles'
+const User = require('../user_model.js')
+
 /* GET users listing. */
 let users;
-
+mongoose.connect(mongoDB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
 
 router.get('/', function(req, res, next) {
-  MongoClient.connect('mongodb://localhost:27017/profiles', function (err, client) {
-  if (err) throw err
-
-  var db = client.db('profiles')
-
-  db.collection('users').find().toArray(function (err, result) {
-    if (err) throw err
-    users = result;
-    console.log(result)
-    console.log(users)
-    console.log(users);
-    res.json(users);
-  })
+ User.find({}, (err, userList) => {
+   res.send(userList)
+ })
 })
   
   
-});
+
 
 module.exports = router;
