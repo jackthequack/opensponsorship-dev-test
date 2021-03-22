@@ -99,7 +99,8 @@ const ProfileViewer = () => {
                            <Col>
                            <Avatar 
                             style={styles.img}
-                            src={users.profilePic} />
+                            // src={users.profilePic}
+                             />
                             </Col>
                            
                            
