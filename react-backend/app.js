@@ -66,7 +66,7 @@ app.get('/', function(req, res) {
 });
 
 app.listen(port, () => {
-  console.log(__dirname)
+  console.log(path.join(__dirname + '/../profile-builder/src', 'index.js'))
   console.log(port)
 })
 module.exports = app;
