@@ -46,7 +46,7 @@ export class List extends Component {
 
                     </Col>
                     <Col>
-                        <NavLink  to={`/list/${user.firstName}_${user.lastName}`} className="btn btn-primary" style={styles.button}>View Profile</NavLink>
+                        <NavLink  to={`/${user.firstName}_${user.lastName}`} className="btn btn-primary" style={styles.button}>View Profile</NavLink>
                     </Col>
                 </Row>
                 <br />

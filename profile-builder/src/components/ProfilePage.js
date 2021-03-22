@@ -265,7 +265,7 @@ const ProfilePage = ({onSubmit}) => {
                     }}> Save changes </Button>
                     </Col>
                     <Col>
-                    <NavLink  to={`/list`} className="btn btn-primary" style={styles.button}>View My Profile</NavLink>
+                    <NavLink  to={`/${users.firstName}_${users.lastName}`} className="btn btn-primary" style={styles.button}>View My Profile</NavLink>
                     </Col>
                 </Row>
 

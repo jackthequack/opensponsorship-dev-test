@@ -49,27 +49,7 @@ const ListComponent = (props) => {
                             <MenuItem onClick={handleClose}><NavLink to= '/'>Form</NavLink></MenuItem>  
                             <MenuItem onClick={handleClose}><NavLink to= '/list'>List</NavLink></MenuItem>  
                         </Menu>
-                </IconButton>
-                
-                
-
-                   
-
-                    
-           
-                
-                
-
-                
-                {/* <Menu open={openMenu}>
-                    <MenuItem onClick={handleClose}>Form</MenuItem>  
-                    <MenuItem onClick={handleClose}>List</MenuItem>  
-                </Menu> */}
-
-                
-                    {/* <MenuItem onClick={handleClose}>Save</MenuItem>
-                    <MenuItem onClick={handleClose}>Delete</MenuItem> */}
-                
+                </IconButton>                
             </Toolbar>
                     
         </AppBar>
