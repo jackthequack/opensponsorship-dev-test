@@ -12,6 +12,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var createRouter = require('./routes/create');
 var updateRouter = require('./routes/update')
+const serveReact = require('./routes/react')
 require('dotenv').config()
 var app = express();
 const port = process.env.PORT || 5000;
@@ -44,6 +45,7 @@ let upload = multer(storage);
 app.use('/users', usersRouter);
 app.use('/create', createRouter);
 app.use('/update', updateRouter)
+app.use('*', serveReact)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -60,10 +62,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.get('*', function(req, res) {
-  
-  res.sendFile(path.join(__dirname + '/../profile-builder/src', 'index.js'));
-});
+
 
 app.listen(port, () => {
   console.log(path.join(__dirname + '/../profile-builder/src', 'index.js'))
