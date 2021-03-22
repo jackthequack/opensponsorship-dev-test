@@ -27,9 +27,7 @@ mongoose.connect(process.env.MONGODB_URI || mongoDB, {
   
 }, () => {console.log("Connected to DB")})
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-      cb(null, './public/images');
-  },
+  destination: './public/images',
   filename: function (req, file, cb) {
     cb(
       null,
