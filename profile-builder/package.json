@@ -28,7 +28,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start": "react-scripts build && (cd react-backend && node app.js)",
+    "start": "react-scripts build && (cd react-backend && node app.js)"
 
   },
 
