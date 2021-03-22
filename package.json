@@ -4,7 +4,7 @@
   "description": "OpenSponsorship Submission",
   "main": "index.js",
   "scripts": {
-    "start": "npm install && (cd profile-builder && npm start)"
+    "start": "(cd profile-builder && npm start)"
   },
   "repository": {
     "type": "git",
