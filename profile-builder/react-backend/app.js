@@ -87,7 +87,7 @@ app.post('/create', (req, res) => {
       })
       
 })
-app.put('/update', upload.single('file'), (req, res) => {
+app.put('/update', (req, res) => {
     // console.log("File: " + req.file)
     // console.log("Profile: " + req.body.profilePic)
     const newProfile = {};
