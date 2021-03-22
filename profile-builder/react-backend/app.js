@@ -136,7 +136,7 @@ app.put('/update', upload.single('file'), (req, res) => {
    
 })
 app.get('/images/:fileName', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'images', req.params.fileName))
+  res.sendFile('./public/images/' + req.params.fileName)
 })
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'));
