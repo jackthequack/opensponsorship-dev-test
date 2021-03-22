@@ -49,8 +49,8 @@ export default class ParentForm extends React.Component {
     
       render(){
         const { step } = this.state
-        const { firstName, lastName, sports, gender, dateOfBirth, description, team, location, profilePic, signupSuccess,  } = this.state
-        const values = { firstName, lastName, sports, gender, dateOfBirth, description, team, location, profilePic, signupSuccess }
+        const { firstName, lastName, sports, gender, dateOfBirth, description, team, location, signupSuccess,  } = this.state
+        const values = { firstName, lastName, sports, gender, dateOfBirth, description, team, location, signupSuccess }
         switch (step) {
             case 1:
               return (
