@@ -20,7 +20,7 @@ const FormConfirm =  (props) => {
     const continueForm = e => {
         e.preventDefault();
         const formData = new FormData();
-        let {firstName, lastName, sports, dateOfBirth, gender, description, team, location, profilePic} = props.values;
+        let {firstName, lastName, sports, dateOfBirth, gender, description, team, location} = props.values;
         let profile = {
           firstName,
           lastName,
