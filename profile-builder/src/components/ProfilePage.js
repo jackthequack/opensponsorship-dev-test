@@ -3,6 +3,14 @@ import {useParams, NavLink} from "react-router-dom"
 import {ThemeProvider as MuiThemeProvider} from '@material-ui/core/styles'
 import { Fab, CardMedia, CardActionArea, TextField, TableRow, Avatar, CardHeader, Button} from '@material-ui/core';
 import { Container, Row, Col } from 'react-bootstrap';
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography"; 
+import Menu from '@material-ui/core/Menu'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
+
+import MenuItem from '@material-ui/core/MenuItem';
 import AddIcon from "@material-ui/icons/Add";
 import axios from 'axios'
 import FormData from 'form-data'
@@ -67,6 +75,24 @@ const ProfilePage = ({onSubmit}) => {
     const[users, setUsers] = useState();
     const [_, forceUpdate] = useReducer((x) => x + 1, 0);
     
+    const [openMenu, setOpenMenu] = useState(false);
+    const [anchorEl, open] = useState(null);  
+    const handleClick = event => {  
+            
+        if(openMenu){
+            setOpenMenu(false)
+        }
+        else{
+            setOpenMenu(true)
+        }
+          
+    };  
+
+    const handleClose = () => {  
+            setOpenMenu(false);  
+    }; 
+
+
     useEffect(() => {
         const data = fetch('/users', {headers : { 
             'Content-Type': 'application/json',
@@ -88,7 +114,31 @@ const ProfilePage = ({onSubmit}) => {
     }
     else{
         return(
-            <Container>
+            <div>
+                <AppBar position="static" >
+                    
+                    <Toolbar>
+                        
+                    
+                        <IconButton edge="start" className="menuButton" color="inherit" aria-label="menu" style={styles.icon} onClick={handleClick}>
+                                <MenuIcon />
+                                <Menu id="simple-menu"
+                                    anchorEl={anchorEl}
+                                    keepMounted
+                                    open={openMenu}
+                                    onClose={handleClose}>
+                                    <MenuItem onClick={handleClose}><NavLink to= '/'>Form</NavLink></MenuItem>  
+                                    <MenuItem onClick={handleClose}><NavLink to= '/list'>List</NavLink></MenuItem>  
+                                </Menu>
+                        </IconButton>   
+                        <Typography variant="h6" style={styles.typography}>
+                            OpenSponsorship
+                        </Typography>             
+                    </Toolbar>
+                            
+                </AppBar>
+                <br />
+                        <Container>
                 <Row>
                     <Col>
                         <Container>
@@ -270,6 +320,9 @@ const ProfilePage = ({onSubmit}) => {
                 </Row>
 
             </Container>
+
+                        <br />
+            </div>
            
         )
     }
@@ -292,6 +345,13 @@ const styles = {
         color: "white"
 
     },
+    typography: {
+        marginLeft: "auto",
+        marginRight: "auto"
+    },
+    icon: {
+        position: "absolute"
+    }
 }
 
 export default ProfilePage

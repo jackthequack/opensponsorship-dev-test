@@ -62,20 +62,8 @@ export class Profile extends Component {
             return (
                 <MuiThemeProvider>
                     <React.Fragment>
-                        <AppBar position="static" >
-                            
-                            <Toolbar>
-                                <Typography variant="h6" style={styles.typography}>
-                                    OpenSponsorship
-                                </Typography>
-                                <IconButton edge="start" className="menuButton" color="inherit" aria-label="menu" style={styles.icon}>
-                                    <Menu/>
-                                </IconButton>
-                                
-                            </Toolbar>
-                        </AppBar>
-                        <br />
-                        {/* {console.log(users)} */}
+                        
+                        
                     <ProfilePage 
                         onSubmit={this.onSubmit}
                          />

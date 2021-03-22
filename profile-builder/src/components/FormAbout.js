@@ -6,38 +6,68 @@ import Typography from "@material-ui/core/Typography";
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
-import Menu from '@material-ui/icons/Menu'
+import Menu from '@material-ui/core/Menu'
 import Fab from '@material-ui/core/Fab'
+import MenuIcon from '@material-ui/icons/Menu'
+import MenuItem from '@material-ui/core/MenuItem';
+import {useParams, NavLink} from "react-router-dom"
+
+
 import AddIcon from "@material-ui/icons/Add";
-export class FormAbout extends Component {
-    continue = e => {
+const FormAbout = (props) => {
+    const continueForm = e => {
         e.preventDefault();
-        this.props.next();
+        props.next();
     }
-    back = e => {
+    const back = e => {
         e.preventDefault();
-        this.props.back();
+        props.back();
     }
+    const [openMenu, setOpenMenu] = React.useState(false);
+    const [anchorEl, open] = React.useState(null);  
+    const handleClick = event => {  
+            
+        if(openMenu){
+            setOpenMenu(false)
+        }
+        else{
+            setOpenMenu(true)
+        }
+          
+    };  
+
+    const handleClose = () => {  
+            setOpenMenu(false);  
+    }; 
     
-    render() {
-        const { values, handleChange, handleChangePic } = this.props;
+  
+        const { values, handleChange, handleChangePic } = props;
         return (
             <MuiThemeProvider>
                 <React.Fragment>
                 <AppBar position="static" >
+                    
+                    <Toolbar>
                         
-                        <Toolbar>
-                            <Typography variant="h6" style={styles.typography}>
-                                OpenSponsorship
-                            </Typography>
-                            <IconButton edge="start" className="menuButton" color="inherit" aria-label="menu" style={styles.icon}>
-                                <Menu/>
-                            </IconButton>
+                    
+                        <IconButton edge="start" className="menuButton" color="inherit" aria-label="menu" style={styles.icon} onClick={handleClick}>
+                                <MenuIcon />
+                                <Menu id="simple-menu"
+                                    anchorEl={anchorEl}
+                                    keepMounted
+                                    open={openMenu}
+                                    onClose={handleClose}>
+                                    <MenuItem onClick={handleClose}><NavLink to= '/'>Form</NavLink></MenuItem>  
+                                    <MenuItem onClick={handleClose}><NavLink to= '/list'>List</NavLink></MenuItem>  
+                                </Menu>
+                        </IconButton>   
+                        <Typography variant="h6" style={styles.typography}>
+                            OpenSponsorship
+                        </Typography>             
+                    </Toolbar>
                             
-                        </Toolbar>
-                    </AppBar>
-            
-                    <br />
+                </AppBar>
+                <br />
                 
                     <TextField
                     style={styles.textField}
@@ -101,15 +131,15 @@ export class FormAbout extends Component {
                     </label>
                     <br/>
                     
-                    <Button variant="contained" style = {styles.backButton} onClick={this.back}> Back </Button>
-                    <Button variant="contained" style = {styles.button} onClick={this.continue}> Continue </Button>
+                    <Button variant="contained" style = {styles.backButton} onClick={back}> Back </Button>
+                    <Button variant="contained" style = {styles.button} onClick={continueForm}> Continue </Button>
                
                     
                 </React.Fragment>
             </MuiThemeProvider>
         )
     }
-}
+
 
 const styles = {
     imgBtn: {
@@ -125,7 +155,8 @@ const styles = {
         margin: "1em" 
     },
     textField: {
-        margin: "1em"
+        margin: "1em",
+        width: "25%"
     },
     typography: {
         marginLeft: "auto",

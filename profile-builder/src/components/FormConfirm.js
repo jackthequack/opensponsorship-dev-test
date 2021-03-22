@@ -5,29 +5,22 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography"; 
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
-import Menu from '@material-ui/icons/Menu'
+import Menu from '@material-ui/core/Menu'
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import axios from 'axios';
 import multer from 'multer';
 import crypto from 'crypto'
 import FormData from 'form-data'
-export class FormConfirm extends Component {
+import MenuIcon from '@material-ui/icons/Menu'
+import MenuItem from '@material-ui/core/MenuItem';
+import {useParams, NavLink} from "react-router-dom"
+
+const FormConfirm =  (props) => {
     
-    // storage = multer.diskStorage({ //Used for dynamic naming of images https://www.digitalocean.com/community/tutorials/nodejs-uploading-files-multer-express
-    //     destination: './public',
-    //     filename: function (req, file, callback) {
-    //     crypto.pseudoRandomBytes(16, function(err, raw) {
-    //         if (err) {return callback(err);}
-        
-    //         callback(null, raw.toString('hex') + path.extname(file.originalname));
-    //     });
-    //     }
-    // });
-    // upload = multer({ storage: storage });
-    continue = e => {
+    const continueForm = e => {
         e.preventDefault();
         const formData = new FormData();
-        let {firstName, lastName, sports, dateOfBirth, gender, description, team, location, profilePic} = this.props.values;
+        let {firstName, lastName, sports, dateOfBirth, gender, description, team, location, profilePic} = props.values;
         let profile = {
           firstName,
           lastName,
@@ -53,29 +46,55 @@ export class FormConfirm extends Component {
             })
             .catch(err => console.log(err))
         
-        this.props.next();
+        props.next();
     }
-    back = e => {
+    const back = e => {
         e.preventDefault();
-        this.props.back();
+        props.back();
     } 
+    const [openMenu, setOpenMenu] = React.useState(false);
+    const [anchorEl, open] = React.useState(null);  
+    const handleClick = event => {  
+            
+        if(openMenu){
+            setOpenMenu(false)
+        }
+        else{
+            setOpenMenu(true)
+        }
+          
+    };  
+
+    const handleClose = () => {  
+            setOpenMenu(false);  
+    }; 
     
-    render(){
-        const { values: { firstName, lastName, sports, gender, dateOfBirth, description, team, location} } = this.props;
+ 
+        const { values: { firstName, lastName, sports, gender, dateOfBirth, description, team, location} } = props;
         return(
             <MuiThemeProvider>
             <React.Fragment>
-                <AppBar position="static" >
+            <AppBar position="static" >
                     
                     <Toolbar>
+                        
+                    
+                        <IconButton edge="start" className="menuButton" color="inherit" aria-label="menu" style={styles.icon} onClick={handleClick}>
+                                <MenuIcon />
+                                <Menu id="simple-menu"
+                                    anchorEl={anchorEl}
+                                    keepMounted
+                                    open={openMenu}
+                                    onClose={handleClose}>
+                                    <MenuItem onClick={handleClose}><NavLink to= '/'>Form</NavLink></MenuItem>  
+                                    <MenuItem onClick={handleClose}><NavLink to= '/list'>List</NavLink></MenuItem>  
+                                </Menu>
+                        </IconButton>   
                         <Typography variant="h6" style={styles.typography}>
                             OpenSponsorship
-                        </Typography>
-                        <IconButton edge="start" className="menuButton" color="inherit" aria-label="menu" style={styles.icon}>
-                            <Menu/>
-                        </IconButton>
-                        
+                        </Typography>             
                     </Toolbar>
+                            
                 </AppBar>
                 <br />
                 <div style={styles.confirmList}>
@@ -132,15 +151,15 @@ export class FormConfirm extends Component {
                 </List>
                 </div>
                 <br />
-                <Button variant="contained" style = {styles.backButton} onClick={this.back}> Back </Button>
-                <Button variant="contained" style = {styles.button} onClick={this.continue}> Confirm </Button>
+                <Button variant="contained" style = {styles.backButton} onClick={back}> Back </Button>
+                <Button variant="contained" style = {styles.button} onClick={continueForm}> Confirm </Button>
             </React.Fragment>
             </MuiThemeProvider>
             
                 
         )
     }
-}
+
 const styles = {
     confirmList: {
         display: 'inline-block',
