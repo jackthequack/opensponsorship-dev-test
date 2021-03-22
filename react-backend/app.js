@@ -60,7 +60,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.get('*', function(req, res) {
+app.get('/', function(req, res) {
+  console.log(__dirname)
   res.sendFile(path.join(__dirname + '/../profile-builder/src', 'index.html'));
 });
 
