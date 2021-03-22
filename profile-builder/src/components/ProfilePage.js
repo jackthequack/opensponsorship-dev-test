@@ -71,6 +71,7 @@ const ProfilePage = ({onSubmit}) => {
     let name = slug.split('_');
     let firstName = name[0];
     let lastName = name[1];
+    console.log(firstName, lastName)
     const[isLoading, setLoading] = useState(true);
     const[users, setUsers] = useState();
     const [_, forceUpdate] = useReducer((x) => x + 1, 0);
