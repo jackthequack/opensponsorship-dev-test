@@ -27,7 +27,12 @@ mongoose.connect(process.env.MONGODB_URI || mongoDB, {
   
 }, () => {console.log("Connected to DB")})
 const storage = multer.diskStorage({
-  destination: './public/images',
+  destination: (req, file, callback) => {
+   
+    let path = `./uploads/`;
+    fs.mkdirsSync(path);
+    callback(null, path);
+  },
   filename: function (req, file, cb) {
     cb(
       null,
@@ -131,9 +136,7 @@ app.put('/update', upload.single('file'), (req, res) => {
     })
    
 })
-app.get('/images/:fileName' , (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'images', req.params.fileName))
-})
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'));
 
