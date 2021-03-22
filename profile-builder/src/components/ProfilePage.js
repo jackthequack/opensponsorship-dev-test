@@ -148,7 +148,7 @@ const ProfilePage = ({onSubmit}) => {
                                 <Avatar
                                 id='profilePic'
                                 style={styles.img}
-                                // src={users.profilePic} 
+                             
                                 />
                                 <br />
                                 </Col>

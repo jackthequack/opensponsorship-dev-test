@@ -105,7 +105,7 @@ const FormAbout = (props) => {
                     <Button variant="contained" style={styles.imgBtn} color="secondary" component="span">
                         Upload Photo
                     </Button> */}
-                    <label htmlFor="upload-photo">
+                    {/* <label htmlFor="upload-photo"> */}
                         {/* <input
                             style={{ display: 'none' }}
                             id="upload-photo"
@@ -128,7 +128,7 @@ const FormAbout = (props) => {
 
 
 
-                    </label>
+                    {/* </label> */}
                     <br/>
                     
                     <Button variant="contained" style = {styles.backButton} onClick={back}> Back </Button>
