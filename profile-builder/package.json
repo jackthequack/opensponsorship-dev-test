@@ -28,7 +28,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start": "npm build && (cd react-backend && npm install && node app.js)"
+    "start": "npm run build && (cd react-backend && npm install && node app.js)"
   },
   "eslintConfig": {
     "extends": [
