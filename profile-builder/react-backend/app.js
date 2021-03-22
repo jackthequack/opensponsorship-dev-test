@@ -29,7 +29,7 @@ mongoose.connect(process.env.MONGODB_URI || mongoDB, {
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
       console.log(__dirname )
-      cb(null, 'images/');
+      cb(null, path.join(__dirname, 'public', 'images'));
   },
   filename: function (req, file, cb) {
     cb(
