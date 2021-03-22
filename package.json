@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/jackthequack/opensponsorship-dev-test/issues"
   },
-  "homepage": "https://github.com/jackthequack/opensponsorship-dev-test#readme"
+  "homepage": "https://github.com/jackthequack/opensponsorship-dev-test#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  }
 }

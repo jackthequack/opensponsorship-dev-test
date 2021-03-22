@@ -1,12 +1,17 @@
 var express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
 const mongoDB = 'mongodb://localhost:27017/profiles'
 const User = require('../user_model.js')
 const multer = require('multer')
 const fs = require('fs')
 const path = require('path');
+mongoose.connect(process.env.MONGODB_URI || mongoDB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+require('dotenv').config()
 
 
 const storage = multer.diskStorage({

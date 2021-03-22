@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+require('dotenv').config()
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const mongoDB = 'mongodb://localhost:27017/profiles'
@@ -8,7 +9,7 @@ const crypto = require('crypto')
 const multer = require('multer');
 const path = require('path');
 const User = require('../user_model.js')
-mongoose.connect(mongoDB, {
+mongoose.connect(process.env.MONGODB_URI || mongoDB, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
@@ -35,11 +36,6 @@ const storage = multer.diskStorage({
 router.post('/', upload.single('file'), function(req, res, next) {
     
     let newId;
-    // for(i in req.body){
-    //     console.log(req.body[i])
-    // }
-    
-    // console.log("Profile data", req.body)
     const newProfile = {};
     newProfile.firstName = req.body.firstName,
     newProfile.lastName = req.body.lastName,
@@ -70,8 +66,4 @@ router.post('/', upload.single('file'), function(req, res, next) {
         
     }
 );
-
-router.post('/img', function(req, res, next) { 
-
-})
 module.exports = router;
