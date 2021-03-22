@@ -14,7 +14,7 @@ var createRouter = require('./routes/create');
 var updateRouter = require('./routes/update')
 require('dotenv').config()
 var app = express();
-
+const port = process.env.PORT || 5000;
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -64,5 +64,7 @@ app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname + '/../profile-builder/src', 'index.html'));
 });
 
-
+app.listen(port, () => {
+  console.log(port)
+})
 module.exports = app;
