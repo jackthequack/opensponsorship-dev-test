@@ -56,7 +56,7 @@ app.get('/users', (req, res) => {
     res.send(userList)
   })
 })
-app.post('/create', (req, res) => {
+app.post('/create', upload.single('file'), (req, res) => {
   let newId;
   const newProfile = {};
   newProfile.firstName = req.body.firstName,
@@ -88,7 +88,7 @@ app.post('/create', (req, res) => {
       })
       
 })
-app.put('/update', (req, res) => {
+app.put('/update', upload.single(file), (req, res) => {
     // console.log("File: " + req.file)
     // console.log("Profile: " + req.body.profilePic)
     const newProfile = {};
