@@ -28,7 +28,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start": "npm run-script build && (cd react-backend && npm start)"
+    "start": "(cd react-backend && npm start) && (npm run-script build)"
   },
   "eslintConfig": {
     "extends": [
