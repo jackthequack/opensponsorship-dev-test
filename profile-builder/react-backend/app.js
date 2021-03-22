@@ -30,7 +30,7 @@ const storage = multer.diskStorage({
   destination: (req, file, callback) => {
    
     let path = `./uploads/`;
-    fs.mkdirsSync(path);
+    fs.mkdirSync(path);
     callback(null, path);
   },
   filename: function (req, file, cb) {
