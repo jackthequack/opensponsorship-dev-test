@@ -20,20 +20,20 @@ mongoose.connect(process.env.MONGODB_URI || mongoDB, {
   useUnifiedTopology: true
   
 }, () => {console.log("Connected to DB")})
-// const storage = multer.diskStorage({
-//   destination: (req, file, callback) => {
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
    
-//     let path = `./public/images`;
-//     callback(null, path);
-//   },
-//   filename: function (req, file, cb) {
-//     cb(
-//       null,
-//       file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-//     );
-//   },
-// });
-// let upload = multer({storage: storage});
+    let path = `./public/images`;
+    callback(null, path);
+  },
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+let upload = multer({storage: storage});
 
 var app = express();
 const port = process.env.PORT || 5000;
