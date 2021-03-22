@@ -41,7 +41,7 @@ const FormAbout = (props) => {
     }; 
     
   
-        const { values, handleChange, handleChangePic } = props;
+        const { values, handleChange } = props;
         return (
             <MuiThemeProvider>
                 <React.Fragment>

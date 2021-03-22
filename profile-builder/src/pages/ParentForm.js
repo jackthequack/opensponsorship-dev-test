@@ -15,7 +15,6 @@ export default class ParentForm extends React.Component {
       description: String, 
       team: String, 
       location: String,
-      // profilePic: Image,
       id: String,
       signupSuccess: false, 
     }
@@ -41,11 +40,11 @@ export default class ParentForm extends React.Component {
         })
         console.log(this.state)
     }
-    handleChangePic = input => e => {
-      this.setState({
-        [input]: e.target.files[0]
-      } )
-    }
+    // handleChangePic = input => e => {
+    //   this.setState({
+    //     [input]: e.target.files[0]
+    //   } )
+    // }
     
       render(){
         const { step } = this.state
@@ -65,7 +64,7 @@ export default class ParentForm extends React.Component {
                 <FormAbout 
                 values = {values} 
                 handleChange = {this.handleChange}
-                handleChangePic = {this.handleChangePic}
+                // handleChangePic = {this.handleChangePic}
                 next = {this.next}
                 back = {this.back}
                 
