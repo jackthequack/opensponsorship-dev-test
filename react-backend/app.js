@@ -52,15 +52,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-const storage = multer.diskStorage({
-    destination: "./public/images",
-    filename: function (req, file, cb) {
-      cb(
-        null,
-        file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-      );
-    },
-  });
+
 
 
 let upload = multer(storage);
@@ -69,7 +61,7 @@ app.get('/users', (req, res) => {
     res.send(userList)
   })
 })
-app.post('/create', (req, res) => {
+app.post('/create', upload.single('file'), (req, res) => {
   let newId;
   const newProfile = {};
   newProfile.firstName = req.body.firstName,
@@ -100,7 +92,7 @@ app.post('/create', (req, res) => {
       })
       
 })
-app.put('/update', (req, res) => {
+app.put('/update', upload.single('file'), (req, res) => {
     console.log("File: " + req.file)
     console.log("Profile: " + req.body.profilePic)
     const newProfile = {};
