@@ -7,7 +7,7 @@ const User = require('../user_model.js')
 require('dotenv').config()
 /* GET users listing. */
 let users;
-mongoose.connect(mongoDB, {
+mongoose.connect(process.env.MONGODB_URI || mongoDB, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
