@@ -116,7 +116,7 @@ app.put('/update', upload.single('file'), (req, res) => {
     console.log(__dirname)
     User.findById(req.body["_id"], (err, oldUser) => {
         if(newProfile.profilePic != oldUser.profilePic){
-            fs.unlinkSync(path.join(__dirname, '..', 'public', oldUser.profilePic), (err) => {
+            fs.unlinkSync(path.join(__dirname, 'public', oldUser.profilePic), (err) => {
                 if(err) throw err;
                 console.log("Deleted:", oldUser.profilePic)
             })
