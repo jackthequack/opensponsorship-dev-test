@@ -63,9 +63,7 @@ app.post('/create', (req, res) => {
       Object.keys(fields).forEach(function(name) {
            console.log('got field named ' + name);
            console.log(fields);
-           if(name == '_id'){
-             continue;
-           }
+           
            newProfile[name] = field[name];
        });
        console.log(newProfile)
@@ -98,9 +96,7 @@ app.put('/update', (req, res) => {
       Object.keys(fields).forEach(function(name) {
            console.log('got field named ' + name);
            console.log(fields);
-           if(name == '_id'){
-             continue;
-           }
+           
            newProfile[name] = field[name];
        });
    });
