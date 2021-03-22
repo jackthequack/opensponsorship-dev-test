@@ -40,7 +40,7 @@ const storage = multer.diskStorage({
 
 let upload = multer(storage);
 
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/create', createRouter);
 app.use('/update', updateRouter)
