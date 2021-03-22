@@ -24,7 +24,8 @@ require('dotenv').config()
 mongoose.connect(process.env.MONGODB_URI || mongoDB, {
   useNewUrlParser: true,
   useUnifiedTopology: true
-})
+  
+}, () => {console.log("Connected to DB")})
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
       cb(null, './public/images');
