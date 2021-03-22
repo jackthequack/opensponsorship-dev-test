@@ -26,6 +26,10 @@ export default class ParentForm extends React.Component {
     }
     back = () => {
       //update state.step by minus 1 from previous state
+      if(typeof this.state.profilePic != "undefined"){
+        delete this.state.profilePic
+      }
+      
       this.setState(prevState => {
           return {step: prevState.step - 1
       }})
