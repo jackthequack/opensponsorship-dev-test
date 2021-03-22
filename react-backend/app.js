@@ -61,11 +61,12 @@ app.use(function(err, req, res, next) {
 });
 
 app.get('/', function(req, res) {
-  console.log(__dirname)
+  
   res.sendFile(path.join(__dirname + '/../profile-builder/src', 'index.js'));
 });
 
 app.listen(port, () => {
+  console.log(__dirname)
   console.log(port)
 })
 module.exports = app;
