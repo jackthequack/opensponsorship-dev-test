@@ -45,7 +45,7 @@ let upload = multer(storage);
 app.use('/users', usersRouter);
 app.use('/create', createRouter);
 app.use('/update', updateRouter)
-app.use('*', serveReact)
+app.use('/', serveReact)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
