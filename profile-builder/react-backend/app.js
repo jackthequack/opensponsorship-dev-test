@@ -15,7 +15,7 @@ var updateRouter = require('./routes/update')
 const serveReact = require('./routes/react')
 const mongoose = require('mongoose');
 const mongoDB = 'mongodb://localhost:27017/profiles'
-
+const fs = require('fs')
 const User = require('./user_model.js')
 
 
