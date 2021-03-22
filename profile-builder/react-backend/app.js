@@ -18,7 +18,6 @@ require('dotenv').config()
 mongoose.connect(process.env.MONGODB_URI || mongoDB, {
   useNewUrlParser: true,
   useUnifiedTopology: true
-  
 }, () => {console.log("Connected to DB")})
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
@@ -56,7 +55,7 @@ app.get('/users', (req, res) => {
     res.send(userList)
   })
 })
-app.post('/create', upload.single('file'), (req, res) => {
+app.post('/create', (req, res) => {
   let newId;
   const newProfile = {};
   let form = new multiparty.Form();
@@ -90,7 +89,7 @@ app.post('/create', upload.single('file'), (req, res) => {
       })
       
 })
-app.put('/update', upload.single(file), (req, res) => {
+app.put('/update', (req, res) => {
     // console.log("File: " + req.file)
     // console.log("Profile: " + req.body.profilePic)
     const newProfile = {};
@@ -105,6 +104,7 @@ app.put('/update', upload.single(file), (req, res) => {
            newProfile[name] = field[name];
        });
    });
+  
    console.log(newProfile)
 
     // if(req.file) {
@@ -144,37 +144,8 @@ app.get('*', (req, res) => {
 
 })
 
-// app.use((req, res, next) => {
-//   res.sendFile(path.join(__dirname, "..", "build", "index.html"));
-// });
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
-// app.use('/create', createRouter);
-// app.use('/update', updateRouter)
-// app.use(function(req, res, next) {
-//   res.sendFile(path.join(__dirname + '/../profile-builder/src/index.js'));
-
-// })
-// catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   next(createError(404));
-// });
-
-// error handler
-// app.use(function(err, req, res, next) {
-//   // set locals, only providing error in development
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-//   // render the error page
-//   res.status(err.status || 500);
-//   res.render('error');
-// });
-
-
 
 app.listen(port, () => {
   // console.log(path.join(__dirname + '/../profile-builder/public', 'index.html'))
   console.log(port)
-})
-module.exports = app;
+})})
