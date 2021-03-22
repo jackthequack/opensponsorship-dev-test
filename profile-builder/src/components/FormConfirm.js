@@ -32,9 +32,6 @@ const FormConfirm =  (props) => {
           location,
         }
         for(let attribute in profile){
-            if(attribute = "profilePic"){
-                continue;
-            }
             formData.set(attribute, profile[attribute])
         }
         // formData.set("file", profilePic, profilePic.name)

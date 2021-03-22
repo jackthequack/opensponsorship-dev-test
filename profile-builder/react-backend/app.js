@@ -11,7 +11,7 @@ const crypto = require('crypto')
 const mongoose = require('mongoose');
 const mongoDB = 'mongodb://localhost:27017/profiles'
 const User = require('./user_model.js')
-
+const multiparty = require('multiparty');
 
 require('dotenv').config()
 
@@ -59,15 +59,17 @@ app.get('/users', (req, res) => {
 app.post('/create', upload.single('file'), (req, res) => {
   let newId;
   const newProfile = {};
-  newProfile.firstName = req.body.firstName,
-  newProfile.lastName = req.body.lastName,
-  newProfile.sports = req.body.sports,
-  newProfile.gender = req.body.gender,
-  newProfile.dateOfBirth = req.body.dateOfBirth,
-  newProfile.description = req.body.description,
-  newProfile.team = req.body.team,
-  newProfile.location = req.body.location
-  console.log(req.body)
+  let form = new multiparty.Form();
+    form.parse(req, function(err, fields, files) {
+      Object.keys(fields).forEach(function(name) {
+           console.log('got field named ' + name);
+           console.log(fields);
+           if(name == '_id'){
+             continue;
+           }
+           newProfile[name] = field[name];
+       });
+       console.log(newProfile)
   // newProfile.profilePic = '/images/' + req.file.filename
       
     //   console.log("Profile: " + req.file)
@@ -92,16 +94,19 @@ app.put('/update', upload.single(file), (req, res) => {
     // console.log("File: " + req.file)
     // console.log("Profile: " + req.body.profilePic)
     const newProfile = {};
+    let form = new multiparty.Form();
+    form.parse(req, function(err, fields, files) {
+      Object.keys(fields).forEach(function(name) {
+           console.log('got field named ' + name);
+           console.log(fields);
+           if(name == '_id'){
+             continue;
+           }
+           newProfile[name] = field[name];
+       });
+   });
+   console.log(newProfile)
 
-    newProfile.firstName = req.body.firstName,
-    newProfile.lastName = req.body.lastName,
-    newProfile.sports = req.body.sports,
-    newProfile.gender = req.body.gender,
-    newProfile.dateOfBirth = req.body.dateOfBirth,
-    newProfile.description = req.body.description,
-    newProfile.team = req.body.team,
-    newProfile.location = req.body.location
-    console.log(req.body);
     // if(req.file) {
     //     newProfile.profilePic = '/images/' + req.file.filename;
     // }
@@ -110,7 +115,7 @@ app.put('/update', upload.single(file), (req, res) => {
     // }
         // console.log(newProfile.profilePic)
     // console.log(__dirname)
-    User.findById(req.body["_id"], (err, oldUser) => {
+    User.findById(fields["_id"], (err, oldUser) => {
         // if(newProfile.profilePic != oldUser.profilePic){
         //     fs.unlinkSync(path.join(__dirname, 'public', oldUser.profilePic), (err) => {
         //         if(err) throw err;
