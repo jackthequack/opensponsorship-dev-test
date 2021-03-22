@@ -37,6 +37,7 @@ export default class ParentForm extends React.Component {
       console.log(this.state)
     }
     handleChange = input => e => {
+      console.log(this.state.profilePic)
       if(typeof this.state.profilePic != "undefined"){
         delete this.state.profilePic
       }
