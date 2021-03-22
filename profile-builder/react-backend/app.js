@@ -8,14 +8,8 @@ const path = require('path');
 const methodOverrid = require('method-override');
 const GridFsStorage = require('multer-gridfs-storage')
 const crypto = require('crypto')
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var createRouter = require('./routes/create');
-var updateRouter = require('./routes/update')
-const serveReact = require('./routes/react')
 const mongoose = require('mongoose');
 const mongoDB = 'mongodb://localhost:27017/profiles'
-const fs = require('fs')
 const User = require('./user_model.js')
 
 
@@ -26,20 +20,20 @@ mongoose.connect(process.env.MONGODB_URI || mongoDB, {
   useUnifiedTopology: true
   
 }, () => {console.log("Connected to DB")})
-const storage = multer.diskStorage({
-  destination: (req, file, callback) => {
+// const storage = multer.diskStorage({
+//   destination: (req, file, callback) => {
    
-    let path = `./public/images`;
-    callback(null, path);
-  },
-  filename: function (req, file, cb) {
-    cb(
-      null,
-      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-    );
-  },
-});
-let upload = multer({storage: storage});
+//     let path = `./public/images`;
+//     callback(null, path);
+//   },
+//   filename: function (req, file, cb) {
+//     cb(
+//       null,
+//       file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+//     );
+//   },
+// });
+// let upload = multer({storage: storage});
 
 var app = express();
 const port = process.env.PORT || 5000;
@@ -62,7 +56,7 @@ app.get('/users', (req, res) => {
     res.send(userList)
   })
 })
-app.post('/create', upload.single('file'), (req, res) => {
+app.post('/create', (req, res) => {
   let newId;
   const newProfile = {};
   newProfile.firstName = req.body.firstName,
@@ -73,10 +67,10 @@ app.post('/create', upload.single('file'), (req, res) => {
   newProfile.description = req.body.description,
   newProfile.team = req.body.team,
   newProfile.location = req.body.location
-  newProfile.profilePic = '/images/' + req.file.filename
+  // newProfile.profilePic = '/images/' + req.file.filename
       
-      console.log("Profile: " + req.file)
-     console.log(req.file.filename)
+    //   console.log("Profile: " + req.file)
+    //  console.log(req.file.filename)
 
       let userInstance = new User(newProfile);
       console.log(userInstance)
@@ -94,8 +88,8 @@ app.post('/create', upload.single('file'), (req, res) => {
       
 })
 app.put('/update', upload.single('file'), (req, res) => {
-    console.log("File: " + req.file)
-    console.log("Profile: " + req.body.profilePic)
+    // console.log("File: " + req.file)
+    // console.log("Profile: " + req.body.profilePic)
     const newProfile = {};
 
     newProfile.firstName = req.body.firstName,
@@ -106,31 +100,31 @@ app.put('/update', upload.single('file'), (req, res) => {
     newProfile.description = req.body.description,
     newProfile.team = req.body.team,
     newProfile.location = req.body.location
-    if(req.file) {
-        newProfile.profilePic = '/images/' + req.file.filename;
-    }
-    else {
-        newProfile.profilePic = req.body.profilePic
-    }
-        console.log(newProfile.profilePic)
+    // if(req.file) {
+    //     newProfile.profilePic = '/images/' + req.file.filename;
+    // }
+    // else {
+    //     newProfile.profilePic = req.body.profilePic
+    // }
+        // console.log(newProfile.profilePic)
     console.log(__dirname)
     User.findById(req.body["_id"], (err, oldUser) => {
-        if(newProfile.profilePic != oldUser.profilePic){
-            fs.unlinkSync(path.join(__dirname, 'public', oldUser.profilePic), (err) => {
-                if(err) throw err;
-                console.log("Deleted:", oldUser.profilePic)
-            })
-            User.findByIdAndUpdate(req.body["_id"], newProfile, {new: true}, (err, newUser) => {
-                console.log("Updated user: ", newUser)
-                res.status(200).send(newUser);
-            });
-        }
-        else{
+        // if(newProfile.profilePic != oldUser.profilePic){
+        //     fs.unlinkSync(path.join(__dirname, 'public', oldUser.profilePic), (err) => {
+        //         if(err) throw err;
+        //         console.log("Deleted:", oldUser.profilePic)
+        //     })
+        //     User.findByIdAndUpdate(req.body["_id"], newProfile, {new: true}, (err, newUser) => {
+        //         console.log("Updated user: ", newUser)
+        //         res.status(200).send(newUser);
+        //     });
+        // }
+        // else{
             User.findByIdAndUpdate(req.body["_id"], newProfile, (err, newUser) => {
                 console.log("Updated user: ", newUser)
                 res.status(200).end();
             });
-        }
+        // }
         
     })
    

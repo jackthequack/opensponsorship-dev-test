@@ -34,11 +34,11 @@ const FormConfirm =  (props) => {
         for(let attribute in profile){
             formData.set(attribute, profile[attribute])
         }
-        formData.set("file", profilePic, profilePic.name)
+        // formData.set("file", profilePic, profilePic.name)
         for(let value of formData.entries()){
             console.log(value[0], value[1])
         }
-        let pp = {profilePic: profilePic}
+        // let pp = {profilePic: profilePic}
         axios
         //Store images locally temporarily until download4ed to mongo
             .post('/create', formData, {

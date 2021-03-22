@@ -38,7 +38,7 @@ export class List extends Component {
                         <Avatar
                             id='profilePic'
                             style={styles.img}
-                            src={user.profilePic} 
+                            // src={user.profilePic} 
                         />
                     </Col>
                     <Col>

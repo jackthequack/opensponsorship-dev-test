@@ -106,13 +106,13 @@ const FormAbout = (props) => {
                         Upload Photo
                     </Button> */}
                     <label htmlFor="upload-photo">
-                        <input
+                        {/* <input
                             style={{ display: 'none' }}
                             id="upload-photo"
                             name="upload-photo"
                             type="file"
                             onChange={handleChangePic('profilePic')}
-                        />
+                        /> */}
 
                         <Fab
                             color="secondary"

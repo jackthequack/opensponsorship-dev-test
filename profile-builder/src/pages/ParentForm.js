@@ -15,7 +15,7 @@ export default class ParentForm extends React.Component {
       description: String, 
       team: String, 
       location: String,
-      profilePic: Image,
+      // profilePic: Image,
       id: String,
       signupSuccess: false, 
     }

@@ -147,7 +147,7 @@ const ProfilePage = ({onSubmit}) => {
                                 <Avatar
                                 id='profilePic'
                                 style={styles.img}
-                                src={users.profilePic} 
+                                // src={users.profilePic} 
                                 />
                                 <br />
                                 </Col>
@@ -162,10 +162,10 @@ const ProfilePage = ({onSubmit}) => {
                                     id="upload-photo"
                                     name="upload-photo"
                                     type="file"
-                                    onChange= {(e) => {
-                                        users['profilePic'] = e.target.files[0];
-                                    }
-                                    }
+                                    // onChange= {(e) => {
+                                    //     users['profilePic'] = e.target.files[0];
+                                    // }
+                                    
                                 />
                                 <Fab
                                 color="secondary"
@@ -297,11 +297,11 @@ const ProfilePage = ({onSubmit}) => {
                         for(let attribute in users){
                             formData.set(attribute, users[attribute])
                         }
-                        if(users.profilePic instanceof File){
-                            console.log("Working")
-                            formData.delete("profilePic")
-                            formData.set("file", users.profilePic, users.profilePic.name)
-                        }
+                        // if(users.profilePic instanceof File){
+                        //     console.log("Working")
+                        //     formData.delete("profilePic")
+                        //     formData.set("file", users.profilePic, users.profilePic.name)
+                        // }
      
                         axios
                         .put('/update', formData, {
