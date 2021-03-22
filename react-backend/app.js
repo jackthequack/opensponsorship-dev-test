@@ -45,7 +45,10 @@ let upload = multer(storage);
 app.use('/users', usersRouter);
 app.use('/create', createRouter);
 app.use('/update', updateRouter)
-app.use('/', serveReact)
+app.use(function(req, res, next) {
+  res.sendFile(path.join(__dirname + '/../profile-builder/src/index.js'));
+
+})
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
