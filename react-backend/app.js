@@ -52,10 +52,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
-
-
-let upload = multer(storage);
 app.get('/users', (req, res) => {
   User.find({}, (err, userList) => {
     res.send(userList)
