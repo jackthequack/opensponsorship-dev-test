@@ -67,6 +67,7 @@ app.post('/create', (req, res) => {
   newProfile.description = req.body.description,
   newProfile.team = req.body.team,
   newProfile.location = req.body.location
+  console.log(req.body)
   // newProfile.profilePic = '/images/' + req.file.filename
       
     //   console.log("Profile: " + req.file)
@@ -100,6 +101,7 @@ app.put('/update', (req, res) => {
     newProfile.description = req.body.description,
     newProfile.team = req.body.team,
     newProfile.location = req.body.location
+    console.log(req.body);
     // if(req.file) {
     //     newProfile.profilePic = '/images/' + req.file.filename;
     // }
@@ -107,7 +109,7 @@ app.put('/update', (req, res) => {
     //     newProfile.profilePic = req.body.profilePic
     // }
         // console.log(newProfile.profilePic)
-    console.log(__dirname)
+    // console.log(__dirname)
     User.findById(req.body["_id"], (err, oldUser) => {
         // if(newProfile.profilePic != oldUser.profilePic){
         //     fs.unlinkSync(path.join(__dirname, 'public', oldUser.profilePic), (err) => {
