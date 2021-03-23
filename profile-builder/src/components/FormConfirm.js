@@ -39,6 +39,7 @@ const FormConfirm =  (props) => {
         //     console.log(value[0], value[1])
         // }
         // let pp = {profilePic: profilePic}
+        console.log(profile);
         axios
         //Store images locally temporarily until download4ed to mongo
             .post('/create', profile)
