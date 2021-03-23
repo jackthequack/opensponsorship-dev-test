@@ -37,7 +37,7 @@ export default class ParentForm extends React.Component {
       console.log(this.state)
     }
     handleChange = input => e => {
-      
+  
         this.setState({
             [input]: e.target.value
         })
