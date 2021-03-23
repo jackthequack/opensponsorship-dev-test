@@ -19,7 +19,7 @@ const FormConfirm =  (props) => {
     
     const continueForm = e => {
         e.preventDefault();
-        const formData = new FormData();
+        // const formData = new FormData();
         let {firstName, lastName, sports, dateOfBirth, gender, description, team, location} = props.values;
         let profile = {
           firstName,
@@ -31,19 +31,17 @@ const FormConfirm =  (props) => {
           team,
           location,
         }
-        for(let attribute in profile){
-            formData.set(attribute, profile[attribute])
-        }
-        // formData.set("file", profilePic, profilePic.name)
-        for(let value of formData.entries()){
-            console.log(value[0], value[1])
-        }
+        // for(let attribute in profile){
+        //     formData.set(attribute, profile[attribute])
+        // }
+        // // formData.set("file", profilePic, profilePic.name)
+        // for(let value of formData.entries()){
+        //     console.log(value[0], value[1])
+        // }
         // let pp = {profilePic: profilePic}
         axios
         //Store images locally temporarily until download4ed to mongo
-            .post('/create', formData, {
-                headers: {'Content-Type': 'multipart/form-data'}
-            })
+            .post('/create', profile)
             .catch(err => console.log(err))
         
         props.next();

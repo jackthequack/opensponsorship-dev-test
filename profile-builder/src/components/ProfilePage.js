@@ -293,11 +293,11 @@ const ProfilePage = ({onSubmit}) => {
                 <Row>
                     <Col>
                     <Button variant="contained" style = {styles.button} onClick={() => {
-                        console.log(users)
-                        const formData = new FormData();
-                        for(let attribute in users){
-                            formData.set(attribute, users[attribute])
-                        }
+                        // console.log(users)
+                        // const formData = new FormData();
+                        // for(let attribute in users){
+                        //     formData.set(attribute, users[attribute])
+                        // }
                         // if(users.profilePic instanceof File){
                         //     console.log("Working")
                         //     formData.delete("profilePic")
@@ -305,8 +305,7 @@ const ProfilePage = ({onSubmit}) => {
                         // }
      
                         axios
-                        .put('/update', formData, {
-                            headers: {'Content-Type': 'multipart/form-data'}
+                        .put('/update', users, {
                         })
                         .then(res => {
                             setUsers(res.data)

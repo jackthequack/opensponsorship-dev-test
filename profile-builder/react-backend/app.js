@@ -11,7 +11,6 @@ const crypto = require('crypto')
 const mongoose = require('mongoose');
 const mongoDB = 'mongodb://localhost:27017/profiles'
 const User = require('./user_model.js')
-const multiparty = require('multiparty');
 
 require('dotenv').config()
 
@@ -58,15 +57,9 @@ app.get('/users', (req, res) => {
 app.post('/create', (req, res) => {
   let newId;
   const newProfile = {};
-  let form = new multiparty.Form();
-    form.parse(req, function(err, fields, files) {
-      Object.keys(fields).forEach(function(name) {
-           console.log('got field named ' + name);
-           console.log(fields);
-           
-           newProfile[name] = field[name];
-       });
-       console.log(newProfile)
+  for(let i in req.body){
+    newProfile[i] = req.body[i];
+  }
   // newProfile.profilePic = '/images/' + req.file.filename
       
     //   console.log("Profile: " + req.file)
@@ -91,15 +84,9 @@ app.put('/update', (req, res) => {
     // console.log("File: " + req.file)
     // console.log("Profile: " + req.body.profilePic)
     const newProfile = {};
-    let form = new multiparty.Form();
-    form.parse(req, function(err, fields, files) {
-      Object.keys(fields).forEach(function(name) {
-           console.log('got field named ' + name);
-           console.log(fields);
-           
-           newProfile[name] = field[name];
-       });
-   });
+    for(let i in req.body){
+      newProfile[i] = req.body[i]
+    }
   
    console.log(newProfile)
 
@@ -111,7 +98,7 @@ app.put('/update', (req, res) => {
     // }
         // console.log(newProfile.profilePic)
     // console.log(__dirname)
-    User.findById(fields["_id"], (err, oldUser) => {
+    User.findById(newProfile["_id"], (err, oldUser) => {
         // if(newProfile.profilePic != oldUser.profilePic){
         //     fs.unlinkSync(path.join(__dirname, 'public', oldUser.profilePic), (err) => {
         //         if(err) throw err;
@@ -144,4 +131,4 @@ app.get('*', (req, res) => {
 app.listen(port, () => {
   // console.log(path.join(__dirname + '/../profile-builder/public', 'index.html'))
   console.log(port)
-})})
+})
